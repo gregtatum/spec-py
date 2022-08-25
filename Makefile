@@ -1,4 +1,4 @@
-.PHONY: install, lint-format, lint-style, test, test-all
+.PHONY: install, lint-format, lint-style, test-py, test-types, test, lint, all
 
 install:
 	poetry install
@@ -9,7 +9,14 @@ lint-format:
 lint-style:
 	poetry run pycodestyle tests --show-source
 
-test:
+test-py:
 	poetry run pytest
 
-test-all: lint-format lint-style test
+test-types:
+	poetry run mypy tests
+
+lint: lint-format lint-style
+
+test: test-py test-types
+
+all: lint test
